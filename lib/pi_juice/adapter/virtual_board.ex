@@ -9,7 +9,8 @@ defmodule PiJuice.Adapter.VirtualBoard do
 
   def start_link(opts) do
     name = Keyword.get(opts, :name) || raise ArgumentError, "A name must be supplied"
-    board_name = Keyword.get(opts, :board_name, board_name_from_name(name)) # todo: maybe remove it if not needed
+    # todo: maybe remove it if not needed
+    board_name = Keyword.get(opts, :board_name, board_name_from_name(name))
     config = VirtualBoard.Config.new(Keyword.get(opts, :config, []))
 
     state = %{
@@ -24,7 +25,7 @@ defmodule PiJuice.Adapter.VirtualBoard do
   @impl Supervisor
   def init(state) do
     children = [
-      {VirtualBoard.State, [name: process_names(state.name)[:state], state: state]},
+      {VirtualBoard.State, [name: process_names(state.name)[:state], state: state]}
     ]
 
     Supervisor.init(children, strategy: :rest_for_one)

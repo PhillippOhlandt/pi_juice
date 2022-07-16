@@ -26,12 +26,12 @@ defmodule PiJuice.Board do
     children = [
       {Board.State, [name: process_names(state.name)[:state], state: clean_state]},
       {Board.Manager, [name: process_names(state.name)[:manager]]},
-      {state.adapter, [
-        name: process_names(state.name)[:adapter],
-        board_name: state.name,
-        config: state.adapter_config
-      ]
-      },
+      {state.adapter,
+       [
+         name: process_names(state.name)[:adapter],
+         board_name: state.name,
+         config: state.adapter_config
+       ]}
     ]
 
     Supervisor.init(children, strategy: :rest_for_one)
@@ -73,7 +73,7 @@ defmodule PiJuice.Board do
   end
 
   def get_adapter_config(_name) do
-    #todo: implement
+    # todo: implement
   end
 
   def set_config(name, %Board.Config{} = config) do

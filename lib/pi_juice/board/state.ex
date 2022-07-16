@@ -8,7 +8,7 @@ defmodule PiJuice.Board.State do
   @default %{
     name: nil,
     adapter: nil,
-    config: Board.Config.new(),
+    config: Board.Config.new()
   }
 
   def start_link(opts) do
@@ -38,7 +38,13 @@ defmodule PiJuice.Board.State do
 
   @impl true
   def init(state) do
-    ets_table = :ets.new(Board.process_names(state.name)[:state], [:set, :protected, :named_table, {:read_concurrency, true}])
+    ets_table =
+      :ets.new(Board.process_names(state.name)[:state], [
+        :set,
+        :protected,
+        :named_table,
+        {:read_concurrency, true}
+      ])
 
     state = Enum.into(state, @default)
 

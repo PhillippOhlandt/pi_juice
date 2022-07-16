@@ -7,7 +7,9 @@ defmodule PiJuice.Adapter.HardwareBoard.Communication do
 
   def start_link(opts) do
     name = Keyword.get(opts, :name) || raise ArgumentError, "A name must be supplied"
-    adapter_name = Keyword.get(opts, :adapter_name) || raise ArgumentError, "An adapter_name must be supplied"
+
+    adapter_name =
+      Keyword.get(opts, :adapter_name) || raise ArgumentError, "An adapter_name must be supplied"
 
     state = %{
       adapter_name: adapter_name
@@ -54,23 +56,28 @@ defmodule PiJuice.Adapter.HardwareBoard.Communication do
         retries: retries
       )
 
-    reply = case result do
-      {:ok, <<result_data::binary-size(length), checksum::integer>>} ->
-        case get_checksum(result_data) == checksum do
-          true -> {:ok, result_data}
-          false ->
-            rest_length = length - 1
-            <<first_byte::binary-size(1), rest::binary-size(rest_length)>> = result_data
+    reply =
+      case result do
+        {:ok, <<result_data::binary-size(length), checksum::integer>>} ->
+          case get_checksum(result_data) == checksum do
+            true ->
+              {:ok, result_data}
 
-            new_data = <<bor(first_byte, 0x80), rest::binary>>
+            false ->
+              rest_length = length - 1
+              <<first_byte::binary-size(1), rest::binary-size(rest_length)>> = result_data
 
-            case get_checksum(new_data) == checksum do
-              true -> {:ok, new_data}
-              false -> {:error, :corrupted_data}
-            end
-        end
-      error -> error
-    end
+              new_data = <<bor(first_byte, 0x80), rest::binary>>
+
+              case get_checksum(new_data) == checksum do
+                true -> {:ok, new_data}
+                false -> {:error, :corrupted_data}
+              end
+          end
+
+        error ->
+          error
+      end
 
     {:reply, reply, state}
   end
@@ -78,6 +85,7 @@ defmodule PiJuice.Adapter.HardwareBoard.Communication do
   def get_checksum(data) when is_integer(data) do
     get_checksum(<<data>>)
   end
+
   def get_checksum(data) when is_binary(data) do
     for <<value::size(8) <- data>>, reduce: 0xFF do
       acc -> bxor(acc, value)

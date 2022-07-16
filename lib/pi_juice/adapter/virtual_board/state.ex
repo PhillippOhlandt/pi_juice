@@ -41,7 +41,7 @@ defmodule PiJuice.Adapter.VirtualBoard.State do
 
   def get_data(name, keys) when is_list(keys) and length(keys) > 0 do
     with {:ok, data} <- get_by_key(name, :data),
-          value <- get_in(data, keys) do
+         value <- get_in(data, keys) do
       case value do
         nil -> {:error, :not_found}
         value -> {:ok, value}
@@ -57,7 +57,13 @@ defmodule PiJuice.Adapter.VirtualBoard.State do
 
   @impl true
   def init(state) do
-    ets_table = :ets.new(VirtualBoard.process_names(state.name)[:state], [:set, :protected, :named_table, {:read_concurrency, true}])
+    ets_table =
+      :ets.new(VirtualBoard.process_names(state.name)[:state], [
+        :set,
+        :protected,
+        :named_table,
+        {:read_concurrency, true}
+      ])
 
     state = Enum.into(state, @default)
 

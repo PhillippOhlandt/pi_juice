@@ -8,7 +8,7 @@ defmodule PiJuice.Adapter.HardwareBoard.State do
   @default %{
     name: nil,
     board_name: nil,
-    config: HardwareBoard.Config.new(),
+    config: HardwareBoard.Config.new()
   }
 
   def start_link(opts) do
@@ -38,7 +38,13 @@ defmodule PiJuice.Adapter.HardwareBoard.State do
 
   @impl true
   def init(state) do
-    ets_table = :ets.new(HardwareBoard.process_names(state.name)[:state], [:set, :protected, :named_table, {:read_concurrency, true}])
+    ets_table =
+      :ets.new(HardwareBoard.process_names(state.name)[:state], [
+        :set,
+        :protected,
+        :named_table,
+        {:read_concurrency, true}
+      ])
 
     state = Enum.into(state, @default)
 

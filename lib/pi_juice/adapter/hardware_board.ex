@@ -9,7 +9,8 @@ defmodule PiJuice.Adapter.HardwareBoard do
 
   def start_link(opts) do
     name = Keyword.get(opts, :name) || raise ArgumentError, "A name must be supplied"
-    board_name = Keyword.get(opts, :board_name, board_name_from_name(name)) # todo: maybe remove it if not needed
+    # todo: maybe remove it if not needed
+    board_name = Keyword.get(opts, :board_name, board_name_from_name(name))
     config = HardwareBoard.Config.new(Keyword.get(opts, :config, []))
 
     state = %{
@@ -25,7 +26,8 @@ defmodule PiJuice.Adapter.HardwareBoard do
   def init(state) do
     children = [
       {HardwareBoard.State, [name: process_names(state.name)[:state], state: state]},
-      {HardwareBoard.Communication, [name: process_names(state.name)[:communication], adapter_name: state.name]},
+      {HardwareBoard.Communication,
+       [name: process_names(state.name)[:communication], adapter_name: state.name]}
     ]
 
     Supervisor.init(children, strategy: :rest_for_one)
