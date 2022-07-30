@@ -1,4 +1,4 @@
-defimpl PiJuice.Adapter.Interface.Status, for: PiJuice.Adapter.HardwareBoard do
+defimpl PiJuice.Adapter.Interface.Battery, for: PiJuice.Adapter.HardwareBoard do
   alias PiJuice.Board
   alias PiJuice.Adapter.HardwareBoard
 

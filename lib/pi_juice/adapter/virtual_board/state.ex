@@ -10,7 +10,7 @@ defmodule PiJuice.Adapter.VirtualBoard.State do
     board_name: nil,
     config: VirtualBoard.Config.new(),
     data: %{
-      status: %{
+      battery: %{
         charge_level: 50
       }
     }

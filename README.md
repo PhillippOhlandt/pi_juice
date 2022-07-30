@@ -36,7 +36,7 @@ and the implementation status of each function.
 
 | Function                     | Real implementation | Mock implementation | Mock Simulated | Original library                    |
 |------------------------------|---------------------|---------------------|----------------|-------------------------------------|
-| `get_charge_level`           | ❌                   | ❌                   | ❌              | `status.GetChargeLevel`             |
+| `get_charge_level`           | ✅                   | ✅                   | ❌              | `status.GetChargeLevel`             |
 | `get_temperature`            | ❌                   | ❌                   | ❌              | `status.GetBatteryTemperature`      |
 | `get_voltage`                | ❌                   | ❌                   | ❌              | `status.GetBatteryVoltage`          |
 | `get_current`                | ❌                   | ❌                   | ❌              | `status.GetBatteryCurrent`          |

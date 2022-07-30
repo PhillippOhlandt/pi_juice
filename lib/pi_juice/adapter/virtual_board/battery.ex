@@ -1,4 +1,4 @@
-defimpl PiJuice.Adapter.Interface.Status, for: PiJuice.Adapter.VirtualBoard do
+defimpl PiJuice.Adapter.Interface.Battery, for: PiJuice.Adapter.VirtualBoard do
   alias PiJuice.Board
   alias PiJuice.Adapter.VirtualBoard
 
@@ -7,7 +7,7 @@ defimpl PiJuice.Adapter.Interface.Status, for: PiJuice.Adapter.VirtualBoard do
     state_process = VirtualBoard.process_names(adapter_name)[:state]
 
     with {:ok, charge_level} <-
-           VirtualBoard.State.get_data(state_process, [:status, :charge_level]) do
+           VirtualBoard.State.get_data(state_process, [:battery, :charge_level]) do
       {:ok, charge_level}
     end
   end
