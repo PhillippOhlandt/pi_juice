@@ -66,7 +66,7 @@ defmodule PiJuice.Adapter.HardwareBoard.Communication do
             false ->
               rest_length = length - 1
               <<first_byte::binary-size(1), rest::binary-size(rest_length)>> = result_data
-
+              <<first_byte>> = first_byte
               new_data = <<bor(first_byte, 0x80), rest::binary>>
 
               case get_checksum(new_data) == checksum do

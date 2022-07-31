@@ -5,6 +5,8 @@ defmodule PiJuice.Adapter.HardwareBoard.State do
 
   alias PiJuice.Adapter.HardwareBoard
 
+  @dialyzer {:nowarn_function, get_table: 1}
+
   @default %{
     name: nil,
     board_name: nil,

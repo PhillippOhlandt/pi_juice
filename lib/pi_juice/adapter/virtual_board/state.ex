@@ -5,6 +5,8 @@ defmodule PiJuice.Adapter.VirtualBoard.State do
 
   alias PiJuice.Adapter.VirtualBoard
 
+  @dialyzer {:nowarn_function, get_table: 1}
+
   @default %{
     name: nil,
     board_name: nil,

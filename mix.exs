@@ -35,7 +35,8 @@ defmodule PiJuice.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:circuits_i2c, "~> 0.3.8 or ~> 1.0"}
+      {:circuits_i2c, "~> 0.3.8 or ~> 1.0"},
+      {:dialyxir, "~> 1.2", only: [:dev], runtime: false}
     ]
   end
 
