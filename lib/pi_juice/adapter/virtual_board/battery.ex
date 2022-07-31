@@ -2,7 +2,7 @@ defimpl PiJuice.Adapter.Interface.Battery, for: PiJuice.Adapter.VirtualBoard do
   alias PiJuice.Board
   alias PiJuice.Adapter.VirtualBoard
 
-  def get_charge_level(%VirtualBoard{name: name}) do
+  def get_charge_level(%VirtualBoard{name: name}, _opts) do
     adapter_name = Board.process_names(name)[:adapter]
     state_process = VirtualBoard.process_names(adapter_name)[:state]
 
